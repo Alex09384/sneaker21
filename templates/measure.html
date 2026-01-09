@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Измерение стопы</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/css/measure.css') }}">
+</head>
+<body>
+<div class="topbar">
+    <a href="/" style="text-decoration: none;">
+        <div class="logo">SneakerFit</div>
+    </a>
+
+    <div class="center-menu">
+        <a href="/how"><button class="ghost-btn">Как это работает</button></a>
+        <a href="/fit"><button class="ghost-btn">Подбор</button></a>
+        <a href="/about"><button class="ghost-btn">О нас</button></a>
+    </div>
+
+    <div class="right-menu">
+        <button id="themeSwitcher" class="theme-switcher">
+            <span id="themeIcon" class="theme-icon">☀</span>
+        </button>
+        <a href="/measure"><button class="nav-btn">Ввести данные</button></a>
+        <a href="/profile"><button class="nav-btn">Профиль</button></a>
+    </div>
+</div>
+
+<div class="main-content">
+<div class="container" style="margin-top:140px; animation: fadeIn 0.5s ease;">
+    <div class="card">
+        <h1>Мои измерения</h1>
+        <p style="color: #666; margin-bottom: 20px;">Заполните параметры вашей стопы для точного подбора обуви</p>
+
+        <form method="POST" id="measureForm">
+            <div class="form-group">
+                <label for="length">Длина стопы (см) *</label>
+                <input type="number" id="length" name="length" step="0.1" min="15" max="40"
+                       value="{{ user_measurements.foot_length if user_measurements.foot_length else '' }}"
+                       placeholder="Например: 25.5" required>
+                <div class="error-message" id="lengthError">Длина стопы должна быть от 15 до 40 см</div>
+            </div>
+
+            <div class="form-group">
+                <label for="width">Ширина стопы (см) *</label>
+                <input type="number" id="width" name="width" step="0.1" min="5" max="15"
+                       value="{{ user_measurements.foot_width if user_measurements.foot_width else '' }}"
+                       placeholder="Например: 9.5" required>
+                <div class="error-message" id="widthError">Ширина стопы должна быть от 5 до 15 см</div>
+            </div>
+
+            <div class="form-group">
+                <label for="oblique_circumference">Косой обхват (см) *</label>
+                <input type="number" id="oblique_circumference" name="oblique_circumference" step="0.1" min="20" max="50"
+                       value="{{ user_measurements.oblique_circumference if user_measurements.oblique_circumference else '' }}"
+                       placeholder="Например: 28.5" required>
+                <div class="error-message" id="obliqueCircumferenceError">Косой обхват должен быть от 20 до 50 см</div>
+            </div>
+
+            <div class="form-group">
+                <label for="foot_type">Тип стопы *</label>
+                <select id="foot_type" name="foot_type" required>
+                    <option value="">Выберите тип стопы</option>
+                    <option value="Нормальная" {% if user_measurements.foot_type == 'Нормальная' %}selected{% endif %}>Нормальная</option>
+                    <option value="Плоскостопие" {% if user_measurements.foot_type == 'Плоскостопие' %}selected{% endif %}>Плоскостопие</option>
+                    <option value="Супинация" {% if user_measurements.foot_type == 'Супинация' %}selected{% endif %}>Супинация</option>
+                </select>
+                <div class="error-message" id="footTypeError">Пожалуйста, выберите тип стопы</div>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-top: 20px;">
+                <button class="btn btn-primary" type="submit" id="submitBtn">Сохранить измерения</button>
+                <a href="/profile" class="btn btn-secondary" style="display:inline-block;">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+<script src="{{ url_for('static', filename='js/measure.js') }}"></script>
+<script src="{{ url_for('static', filename='js/theme-switcher.js') }}"></script>
+<footer class="global-footer">
+    <p>by SneakerFit team © 2025</p>
+</footer>
+</body>
+</html>

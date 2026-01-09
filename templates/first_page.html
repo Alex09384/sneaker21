@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>SneakerFit — Точная 3D-модель стопы</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/css/first_page.css') }}">
+</head>
+<body>
+<div class="main-content">
+    <div class="topbar">
+        <a href="/" style="text-decoration: none;">
+            <div class="logo">SneakerFit</div>
+        </a>
+
+        <div class="center-menu">
+            <a href="/how"><button class="ghost-btn">Как это работает</button></a>
+            <a href="/fit"><button class="ghost-btn">Подбор</button></a>
+            <a href="/about"><button class="ghost-btn">О нас</button></a>
+        </div>
+
+        <div class="right-menu">
+            <button id="themeSwitcher" class="theme-switcher">
+                <span id="themeIcon" class="theme-icon">☀</span>
+            </button>
+            {% if session.user_logged_in %}
+                <a href="/measure"><button class="nav-btn">Ввести данные</button></a>
+                <a href="/profile"><button class="nav-btn">Профиль</button></a>
+                <a href="/logout"><button class="nav-btn">Выйти</button></a>
+            {% else %}
+                <a href="/login_page"><button class="nav-btn">Войти</button></a>
+                <a href="/register_page"><button class="nav-btn">Регистрация</button></a>
+            {% endif %}
+        </div>
+    </div>
+
+    <main class="hero">
+        <section class="text-block">
+            <h1>Точный подбор обуви под ваши стопы</h1>
+            <p>Мы специализируемся на подборе обуви как для повседневной жизни и спорта, так и для сложных случаев: высокий подъём, плоскостопие, широкий или узкий тип стопы.</p>
+            <div class="actions">
+                {% if session.user_logged_in %}
+                    <button class="primary" onclick="window.location.href='/measure'">Ввести данные</button>
+                {% else %}
+                    <button class="primary" onclick="window.location.href='/register_page'">Начать</button>
+                {% endif %}
+            </div>
+        </section>
+
+        <section class="preview-block">
+            <div class="shoe-preview" id="shoePreview">
+                <div class="spinner" style="width: 40px; height: 40px; margin: 0 auto;"></div>
+                <p style="text-align: center; margin-top: 10px; color: #666;">Загружаем обувь...</p>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="{{ url_for('static', filename='js/first_page.js') }}"></script>
+<script src="{{ url_for('static', filename='js/theme-switcher.js') }}"></script>
+<footer class="global-footer">
+    <p>by SneakerFit team © 2025</p>
+</footer>
+</body>
+</html>

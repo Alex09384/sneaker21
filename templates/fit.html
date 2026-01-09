@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Подбор — SneakerFit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/css/fit.css') }}">
+</head>
+<body>
+
+<div class="topbar">
+    <a href="/" style="text-decoration: none;">
+        <div class="logo">SneakerFit</div>
+    </a>
+
+    <div class="center-menu">
+        <a href="/how"><button class="ghost-btn">Как это работает</button></a>
+        <a href="/fit"><button class="ghost-btn">Подбор</button></a>
+        <a href="/about"><button class="ghost-btn">О нас</button></a>
+    </div>
+
+    <div class="right-menu">
+        <button id="themeSwitcher" class="theme-switcher">
+            <span id="themeIcon" class="theme-icon">☀</span>
+        </button>
+        {% if session.user_logged_in %}
+            <a href="/measure"><button class="nav-btn">Ввести данные</button></a>
+            <a href="/profile"><button class="nav-btn">Профиль</button></a>
+            <a href="/logout"><button class="nav-btn">Выйти</button></a>
+        {% else %}
+            <a href="/login_page"><button class="nav-btn">Войти</button></a>
+            <a href="/register_page"><button class="nav-btn">Регистрация</button></a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="container">
+        <div class="card" style="animation: fadeIn 0.4s">
+            <h1 style="text-align:center">Подбор обуви</h1>
+            <p style="text-align:center; margin-bottom: 20px; color: #666;">
+                На основе ваших измерений стопы
+            </p>
+
+            <div class="filter-section" style="display: none;">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="compatibilityFilter">Совместимость</label>
+                        <select id="compatibilityFilter" class="filter-select">
+                            <option value="all">Все модели</option>
+                            <option value="90">90% и выше</option>
+                            <option value="80">80% и выше</option>
+                            <option value="60">60% и выше</option>
+                            <option value="40">40% и выше</option>
+                            <option value="20">20% и выше</option>
+                            <option value="0">0% и выше</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="sortFilter">Сортировка</label>
+                        <select id="sortFilter" class="filter-select">
+                            <option value="compatibility-desc">По совместимости (убыв.)</option>
+                            <option value="compatibility-asc">По совместимости (возр.)</option>
+                            <option value="name-asc">По названию (А-Я)</option>
+                            <option value="name-desc">По названию (Я-А)</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="typeFilter">Тип обуви</label>
+                        <select id="typeFilter" class="filter-select">
+                            <option value="all">Все типы</option>
+                            <option value="sport">Спортивная</option>
+                            <option value="casual">Повседневная</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <button onclick="resetFilters()" class="btn btn-secondary" style="margin-top: 22px;">
+                            Сбросить фильтры
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-count" id="resultsCount">
+                Загружаем рекомендации...
+            </div>
+
+            <div id="recommendations-container">
+                <div class="loading-container">
+                    <div class="spinner" style="width: 40px; height: 40px; margin: 0 auto;"></div>
+                    <p style="margin-top: 20px; color: #666;">Загружаем рекомендации...</p>
+                </div>
+            </div>
+
+            <div class="show-more-container" id="showMoreContainer" style="display: none;">
+                <button id="showMoreBtn" class="btn btn-primary">
+                    Показать еще
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/fit.js') }}"></script>
+<script src="{{ url_for('static', filename='js/theme-switcher.js') }}"></script>
+<footer class="global-footer">by SneakerFit team © 2025</footer>
+</body>
+</html>
